@@ -26,6 +26,7 @@ export async function saveSubscription(
   };
 
   if (createAction) {
+    console.log("reached");
     await fauna.query(
       q.Create(q.Collection("subscriptions"), { data: subscriptionData })
     );
