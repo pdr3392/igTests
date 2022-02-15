@@ -17,6 +17,20 @@ interface PostsProps {
   posts: Post[];
 }
 
+interface ContentProps {
+  type: "paragraph" | "text";
+  text: string;
+}
+
+interface ResponsePostProps {
+  uid?: string;
+  data: {
+    title?: string;
+    content?: ContentProps[];
+  };
+  last_publication_date: string;
+}
+
 export default function Posts({ posts }: PostsProps) {
   return (
     <>
@@ -52,7 +66,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   );
 
-  const posts = response.results.map((post) => {
+  const posts = response.results.map((post: ResponsePostProps) => {
     return {
       slug: post.uid,
       title: RichText.asText(post.data.title),
