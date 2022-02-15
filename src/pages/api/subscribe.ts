@@ -15,7 +15,6 @@ interface UserProps {
 
 const subscribeFunction = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    console.log("reached");
     const session = await getSession({ req });
 
     const user = await fauna.query<UserProps>(
