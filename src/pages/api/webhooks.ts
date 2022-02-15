@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Readable } from "stream";
 import Stripe from "stripe";
 import { stripe } from "../../services/stripe";
-import { saveScubscription } from "./_lib/manageSubscription";
+import { saveSubscription } from "./_lib/manageSubscription";
 
 async function buffer(readable: Readable) {
   const chunks = [];
@@ -52,7 +52,7 @@ const webHooks = async (req: NextApiRequest, res: NextApiResponse) => {
           case "customer.subscription.deleted":
             const subscription = event.data.object as Stripe.Subscription;
 
-            await saveScubscription(
+            await saveSubscription(
               subscription.id,
               subscription.customer.toString(),
               false
@@ -63,7 +63,7 @@ const webHooks = async (req: NextApiRequest, res: NextApiResponse) => {
             const checkoutSession = event.data
               .object as Stripe.Checkout.Session;
 
-            await saveScubscription(
+            await saveSubscription(
               checkoutSession.subscription.toString(),
               checkoutSession.customer.toString(),
               true
