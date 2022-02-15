@@ -17,6 +17,16 @@ interface PostPreviewProps {
   };
 }
 
+interface ResponseDataProps {
+  data: {
+    slug: string;
+    title: string;
+    content: string;
+    updatedAt: string;
+  };
+  last_publication_date: string;
+}
+
 export default function PostPreview({ post }: PostPreviewProps) {
   const [session] = useSession();
   const router = useRouter();
@@ -67,12 +77,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
 
-  const response = await prismic.getByUID("publication", String(slug), {});
+  const response: ResponseDataProps = await prismic.getByUID(
+    "publication",
+    String(slug),
+    {}
+  );
 
   const post = {
     slug,
     title: RichText.asText(response.data.title),
-    content: RichText.asHtml(response.data.content.splice(0, 3)),
+    content: RichText.asHtml(response.data.content.slice(0, 3)),
     updatedAt: new Date(response.last_publication_date).toLocaleDateString(
       "pt-BR",
       {

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Post, { getStaticProps } from "../../pages/posts/preview/[slug]";
 import { mocked } from "ts-jest/utils";
 import { getPrismicClient } from "../../services/prismic";
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 
 jest.mock("../../services/prismic");
