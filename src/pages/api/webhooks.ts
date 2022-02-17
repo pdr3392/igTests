@@ -28,7 +28,6 @@ const relevantEvents = new Set([
 
 const webHooks = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    console.log("reached");
     const buf = await buffer(req);
     const secret = req.headers["stripe-signature"];
 
